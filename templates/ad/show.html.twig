@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ ad.title }}{% endblock %}
+
+{% block body %}
+
+<div class="ad-title pb-2" style="background-image: url('{{ ad.coverImage }}');">
+    <div class="container">
+        <h1>{{ad.title}}</h1>
+        <p>{{ad.introduction}}</p>
+        <p class="h5">{{ad.rooms}} chambres, {{ad.price}} &euros;/nuit</p>
+        <a href="#" class="btn btn-warning">Réserver !</a>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mb-3">
+            {{ ad.content|raw }}
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="img-fluid" src="https://picsum.photos/64/64" alt="user">
+                </div>
+                <div class="col-md-4">
+                    <h3>David Doe</h3>
+                    <span class="badge badge-warning">3 annonces</span>
+                </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae sapiente provident ex fuga? Aut mollitia harum autem! Quisquam eaque consequuntur eveniet tenetur, voluptatibus velit, repellat eum voluptates, quidem beatae saepe.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae sapiente provident ex fuga? Aut mollitia harum autem! Quisquam eaque consequuntur eveniet tenetur, voluptatibus velit, repellat eum voluptates, quidem beatae saepe.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae sapiente provident ex fuga? Aut mollitia harum autem! Quisquam eaque consequuntur eveniet tenetur, voluptatibus velit, repellat eum voluptates, quidem beatae saepe.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

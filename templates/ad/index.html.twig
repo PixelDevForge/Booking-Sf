@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdController!{% endblock %}
+
+{% block body %}
+
+    <main class="container">
+        <h1 class="mt-5 mb-3">Hello {{ controller_name }}!</h1>
+        <div class="row">
+            
+            {% for ad in ads %}
+            
+                <div class="col-md-4">
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">{{ad.rooms}} chambres, {{ad.price}} &euros;/nuit</div>
+                        <div class="card-body">
+                            <img class="img-fluid" src="{{ad.coverImage}}" alt="{{ad.title}}">
+                            <h6 class="card-title mt-2">{{ad.title}}</h6>
+                            <p class="card-text">{{ad.introduction}}</p>
+                            <a href="#" class="btn btn-primary">+ d'infos !</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Pas de notation
+                        </div>
+                    </div>  
+                </div>
+                        
+            {% endfor %}
+
+
+
+
+
+
+        </div>
+    </main>
+
+{% endblock %}

@@ -1,1 +1,4 @@
 php -S localhost:8000 -t public --> launh serv
+
+git init
+git status

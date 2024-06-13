@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
 
             $ad = new Ad();
             $title = $faker->sentence();
-            $coverImage = $faker->imageUrl(1000,350);
+            $coverImage = "https://picsum.photos/1000/500";
             $introduction = $faker->paragraph(2);
             $content = "<p>" . implode("</p><p>", $faker->paragraphs(5)) . "</p>";
             $ad->setTitle($title)
@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
 
             for( $j = 0; $j <=mt_rand(2,5);$j++ ) {
                 $image = new Image();
-                $image->setUrl($faker->imageUrl())
+                $image->setUrl("https://picsum.photos/1000/500")
                       ->setCaption($faker->sentence())
                       ->setAd($ad)
                       ;

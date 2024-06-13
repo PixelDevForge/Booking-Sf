@@ -1,0 +1,31 @@
+{% block _annonce_images_widget %}
+        <p>Insertion images supp </p>
+        {{form_widget(form)}}
+        <input type="hidden" id="widget-count" value="0">
+        <button type="button" class="btn btn-primary" id="add-image"> Ad images !</button>
+    {% endblock %}
+
+    {% block _annonce_images_entry_row %}
+        {{form_widget(form)}}
+    {% endblock %}
+
+    {% block _annonce_images_entry_widget %}
+        <div class="form-group mb-2" id="bloc_{{id}}">
+            <div class="row">
+                <div class="col-md-10 col-10">
+                    <div class="row">
+                        <div class="col">
+                            {{form_widget(form.url)}}
+                        </div>
+                        <div class="col">
+                            {{form_widget(form.caption)}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-2">
+                    <button type="button" class="btn btn-danger" data-action="delete" data-target="#bloc_{{id}}">X</button>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+

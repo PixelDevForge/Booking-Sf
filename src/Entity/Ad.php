@@ -8,9 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use App\Repository\AdRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AdRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(
+    fields: ["title"],
+    message: "Titre déjà utilisé !"
+)]
 class Ad
 {
     #[ORM\Id]
@@ -19,6 +25,12 @@ class Ad
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 10,
+        max: 255,
+        minMessage: "Votre titre est trop court",
+        maxMessage: "Votre titre est trop long"
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
@@ -28,9 +40,17 @@ class Ad
     private ?float $price = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(
+        min: 30,
+        minMessage: "Merci de mettre au moins 30 caractères."
+    )]
     private ?string $introduction = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(
+        min: 100,
+        minMessage: "Merci de mettre au moins 100 caractères."
+    )]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
@@ -42,7 +62,7 @@ class Ad
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'ad')]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'ad',orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()

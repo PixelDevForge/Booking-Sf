@@ -10,6 +10,7 @@
         <p class"text-secondary">{{ad.introduction}}</p>
         <p class="h5 text-secondary">{{ad.rooms}} chambres, {{ad.price}} &euro;/nuit</p>
         <a href="#" class="btn btn-warning">Réserver !</a>
+        <a href="{{ path('ads_edit', {'slug': ad.slug}) }}" class="btn btn-danger">Edit !</a>
     </div>
 </div>
 

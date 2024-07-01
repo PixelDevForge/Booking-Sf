@@ -50,7 +50,7 @@ class AdController extends AbstractController
                 $image->setAd($ad);
                 $this->entityManager->persist($image);
             }
-
+            $ad -> setAuthor($this->getUser());
             $this->entityManager->persist($ad);
             $this->entityManager->flush();
             $this->addFlash('success',"Annonce <strong>{$ad->getTitle()}</strong> ajouté");

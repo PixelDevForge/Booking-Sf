@@ -6,4 +6,8 @@ body{background-color: #f3efef; padding-bottom: 10em;}
 
 .carousel-caption{color: #000;text-shadow: 3px 3px 3px rgba(0,0,0,0.5);}
 
+.avatar{width: 8em;height: 8em; border-radius: 50%;}
+.avatar-medium{max-width: 4em;max-height: 4em;}
+.avatar-small{max-width: 2em;max-height: 2em;}
+
 footer{position: fixed;bottom: 0;width: 100%; color: #f3efef;}

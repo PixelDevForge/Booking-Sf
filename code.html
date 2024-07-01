@@ -1,0 +1,26 @@
+<div class=""></div>
+
+<a href="{{path('user_show',{'slug':a.slug})}}">
+    <img class="img-fluid" src="{{a.avatar}}" alt="{{a.fullname}}">
+</a>
+
+<div class="mt-3">
+    <a class="btn btn-primary" href="{{path('app_account_profile')}}">modifier mon profile</a>
+    <a class="btn btn-danger" href="{{path('app_account_password')}}">modifier mon profile</a>
+</div>
+
+
+
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="accountDropdownLink" href="#">
+        <img src="{{ app.user.avatar }}" alt="Avatar de {{app.user.fullname}}" class="avatar avatar-small">
+        {{app.user.fullname}}
+    </a>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
+        <a class="dropdown-item" href="{{path('app_account_home')}}">Account Home</a>
+        <a class="dropdown-item" href="{{path('app_account_profile')}}">profile</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{{path('app_account_logout')}}">logout</a>
+    </div>
+  </li>

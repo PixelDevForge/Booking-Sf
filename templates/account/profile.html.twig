@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profile!{% endblock %}
+
+{% block body %}
+
+    <main class="container">
+        <h1 class="mt-5 mb-3">Modifier votre profile !</h1>
+
+        {{form_start(form)}}
+        {{form_widget(form)}}
+        <button type="submit" class="btn btn-secondary">Modifier</button>
+        <a href="{{path('app_account_home')}}" class="btn btn-primary">Retour !</a>
+        {{form_end(form)}}
+
+    </main>
+
+{% endblock %}

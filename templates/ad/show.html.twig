@@ -49,18 +49,23 @@
         </div>
 
         <div class="col ms-3">
+          {% set a = ad.author%}
             <div class="row">
-                <div class="col-md-3">
-                    <img class="img-fluid" src="https://picsum.photos/64/64" alt="user">
+                <div class="col-md-3"> 
+                  <a href="{{path('app_user_show',{'slug':a.slug})}}">
+                    <img class="img-fluid" src="{{a.avatar}}" alt="{{a.fullname}}">
+                  </a>
                 </div>
                 <div class="col-md-4">
-                    <h3>David Doe</h3>
-                    <span class="badge badge-warning">3 annonces</span>
+                  <a href="{{path('app_user_show',{'slug':a.slug})}}">
+                      <h3>{{a.fullname}}</h3>
+                  </a>
+                    <span class="badge bg-info">{{a.ads|length}}{%if a.ads|length > 1 %} annonces {%else%} annonce {%endif%}</span>
                 </div>
             </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae sapiente provident ex fuga? Aut mollitia harum autem! Quisquam eaque consequuntur eveniet tenetur, voluptatibus velit, repellat eum voluptates, quidem beatae saepe.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae sapiente provident ex fuga? Aut mollitia harum autem! Quisquam eaque consequuntur eveniet tenetur, voluptatibus velit, repellat eum voluptates, quidem beatae saepe.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae sapiente provident ex fuga? Aut mollitia harum autem! Quisquam eaque consequuntur eveniet tenetur, voluptatibus velit, repellat eum voluptates, quidem beatae saepe.</p>
+            <div class="col py-3">
+              <p>{{a.introduction | raw}}</p>
+            </div>
         </div>
     </div>
 </div>

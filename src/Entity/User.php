@@ -61,8 +61,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(
-        min: 100,
-        minMessage: "Merci de mettre au moins 100 caractères."
+        min: 10,
+        minMessage: "Merci de mettre au moins 10 caractères."
     )]
     private ?string $slug = null;
 
@@ -71,6 +71,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Ad::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $ads;
+
+    public function getFullName(){
+        return $this->firstname.' '.$this->lastname;
+
+    }
 
     public function __construct()
     {

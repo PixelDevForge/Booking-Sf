@@ -5,13 +5,16 @@
 {% block body %}
 
 <div class="ad-title pb-2" style="background-image: url('{{ ad.coverImage }}');">
-    <div class="container">
+    <div class="container mb-3">
         <h1 class"text-secondary">{{ad.title}}</h1>
         <p class"text-secondary">{{ad.introduction}}</p>
         <p class="h5 text-secondary">{{ad.rooms}} chambres, {{ad.price}} &euro;/nuit</p>
-        <a href="#" class="btn btn-warning">Réserver !</a>
-        <a href="{{ path('ads_edit', {'slug': ad.slug}) }}" class="btn btn-danger">Edit !</a>
-    </div>
+        <a href="#" class="btn btn-info">Réserver !</a>
+        {% if app.user and app.user == ad.author%}
+        <a href="{{ path('ads_edit', {'slug': ad.slug}) }}" class="btn btn-warning">Edit !</a>
+        <a href="{{ path('ads_delete', {'slug': ad.slug}) }}" onclick="return confirm(`Voulez-vous variment supprimer cette annonce ?`)" class="btn btn-danger">Delete !</a>
+        {% endif %}
+      </div>
 </div>
 
 <div class="container mt-5">

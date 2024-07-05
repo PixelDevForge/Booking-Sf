@@ -72,6 +72,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Ad::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $ads;
 
+    /**
+     * @var Collection<int, Role>
+     */
+    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'users')]
+    private Collection $userRoles;
+
     public function getFullName(){
         return $this->firstname.' '.$this->lastname;
 
@@ -80,6 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->ads = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
         /*
@@ -230,8 +237,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles():array
     {
+        $roles = $this->userRoles->map(function($role){
+            return $role->getTitle();
 
-        return ['ROLE_USER'];
+        })->toArray();
+
+        $roles[]='ROLE_USER';
+
+        return $roles;
     }  
     public function getPassword(): ?string
     {
@@ -249,6 +262,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->getEmail();
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): static
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles->add($userRole);
+            $userRole->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): static
+    {
+        if ($this->userRoles->removeElement($userRole)) {
+            $userRole->removeUser($this);
+        }
+
+        return $this;
     }
     
 }

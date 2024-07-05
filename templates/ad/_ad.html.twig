@@ -10,6 +10,10 @@
             <h6 class="card-title mt-2">{{ad.title}}</h6>
             <p class="card-text">{{ad.introduction}}</p>
             <a href="{{url}}" class="btn btn-primary">+ d'infos !</a>
+            {% if app.user and app.user == ad.author%}
+            <a href="{{ path('ads_edit', {'slug': ad.slug}) }}" class="btn btn-warning">Edit !</a>
+            <a href="{{ path('ads_delete', {'slug': ad.slug}) }}" class="btn btn-danger">Delete !</a>
+            {% endif %}
         </div>
         <div class="card-footer text-muted">
             Pas de notation

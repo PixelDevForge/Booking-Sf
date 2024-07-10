@@ -69,11 +69,18 @@ class Ad
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
+    /**
+     * @var Collection<int, Booking>
+     */
+    #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'ad')]
+    private Collection $bookings;
+
     public function __construct()
     {
-        $this->images = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
+   
     /*
     Creation d'une fonction d'init du slug avant la persistance et avant la MAJ 
     */
@@ -218,4 +225,36 @@ class Ad
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): static
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings->add($booking);
+            $booking->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): static
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getAd() === $this) {
+                $booking->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+ 
 }

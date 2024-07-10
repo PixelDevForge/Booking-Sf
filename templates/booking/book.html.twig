@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Booker !{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="m-3">Reserver <b>{{ad.title}}</b></h1>
+    <h6>Annonce postée par : <b><a href="{{path('app_user_show',{'slug': ad.author.slug})}}">{{ad.author.fullname}}</b></a></h6>
+
+    {{form_start(form)}}
+    <div class="row">
+        <div class="col">
+            {{form_row(form.startDate)}}
+        </div>
+        <div class="col">
+            {{form_row(form.endDate)}}
+        </div>
+        <div class="col">
+            <h4>Prix du séjour : <span id="amount">... &euro;</span></h4>
+            <h5><span id="days">0</span> jours à <span>{{ad.price}}</span>&euro; la nuit.</h5>
+        </div>
+    </div>
+    {{form_row(form.comment)}}
+    <button type="submit" class="btn btn-info">Réserver !</button>
+    <a class="btn btn-warning" href="{{path('ads_single',{'slug': ad.slug})}}">Retour aux annpnces</b></a>
+    {{form_end(form)}}
+</div>
+{% endblock %}

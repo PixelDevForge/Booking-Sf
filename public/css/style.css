@@ -13,4 +13,6 @@ a:hover{color: indianred;}
 .avatar-medium{max-width: 4em;max-height: 4em;}
 .avatar-small{max-width: 2em;max-height: 2em;}
 
+.flatpickr-disabled{color: red!important;}
+
 footer{position: fixed;bottom: 0;width: 100%; color: #f3efef;}

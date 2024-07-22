@@ -2,6 +2,13 @@
 
 {% block title %}Hello Booker !{% endblock %}
 
+{% block stylesheets %}
+
+<!-- Inclure Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+{% endblock %}
+
 {% block body %}
 <div class="container">
     <h1 class="m-3">Reserver <b>{{ad.title}}</b></h1>
@@ -16,7 +23,7 @@
             {{form_row(form.endDate)}}
         </div>
         <div class="col">
-            <h4>Prix du séjour : <span id="amount">... &euro;</span></h4>
+            <h4>Prix du séjour : <span id="amount">...</span> &euro;</h4>
             <h5><span id="days">0</span> jours à <span>{{ad.price}}</span>&euro; la nuit.</h5>
         </div>
     </div>
@@ -25,4 +32,68 @@
     <a class="btn btn-warning" href="{{path('ads_single',{'slug': ad.slug})}}">Retour aux annpnces</b></a>
     {{form_end(form)}}
 </div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<!-- Inclure Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialiser Flatpickr sur les champs de date
+        var startDateInput = document.getElementById('booking_startDate');
+        var endDateInput = document.getElementById('booking_endDate');
+
+        if (startDateInput) {
+            flatpickr(startDateInput, {
+                dateFormat: "d-m-Y",
+                minDate: "today",
+                disable: [
+                    {% for day in ad.notAvailableDays %}
+                        "{{ day|date('d-m-Y') }}"{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ],
+                onChange: function(selectedDates, dateStr, instance) {
+                    endDateInput._flatpickr.set('minDate', dateStr);
+                }
+            });
+        }
+
+        if (endDateInput) {
+            flatpickr(endDateInput, {
+                dateFormat: "d-m-Y",
+                disable: [
+                    {% for day in ad.notAvailableDays %}
+                        "{{ day|date('d-m-Y') }}"{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            });
+        }
+
+        startDateInput.addEventListener('change', calculateAmount);
+        endDateInput.addEventListener('change', calculateAmount);
+    });
+
+    function calculateAmount(){
+        // Calcul de l'intervalle de dates
+        const endDate = new Date(document.getElementById('booking_endDate').value.replace(/(\d+)-(\d+)-(\d{4})/, '$3-$2-$1'));
+        const startDate = new Date(document.getElementById('booking_startDate').value.replace(/(\d+)-(\d+)-(\d{4})/, '$3-$2-$1'));
+
+        // Comparaison pour déterminer le nombre de jours
+        if (startDate && endDate && endDate > startDate) {
+            const dayTime = 24 * 3600 * 1000;
+            const interval = endDate.getTime() - startDate.getTime();
+            const days = interval / dayTime;
+            const amount = days * {{ ad.price }};
+            document.getElementById('days').textContent = days;
+            document.getElementById('amount').textContent = amount.toLocaleString('fr-FR');
+        }
+    }
+</script>
+
+
+
+
 {% endblock %}

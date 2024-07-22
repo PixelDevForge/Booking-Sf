@@ -6,6 +6,14 @@
 <main class="container">
     <h1>Réservation N° {{booking.id}}</h1>
     <h4><a href="{{path('ads_single',{slug:booking.ad.slug})}}">{{booking.ad.title}}</a></h4>
+    {% if app.request.query.get('alert')%}
+    <div class="alert alert-success">
+        <h4 class="alert-heading">Bravo !</h4>
+        <p>votre réservation auprés de <a href="{{path('app_user_show',{slug:booking.ad.author.slug})}}">{{booking.ad.author.fullname}}</a>
+        pour l'annonce <a href="{{path('ads_single',{slug:booking.ad.author.slug})}}">{{booking.ad.title}} </a>est effective !</p>
+    </div>
+
+    {%endif%}
     <div class="row">
         <div class="col">
             <div class="alert alert-light">

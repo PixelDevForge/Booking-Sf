@@ -29,13 +29,17 @@ class BookingController extends AbstractController
             $booking->setBooker($user)
                     ->setAd($ad);
             
+            //
 
-            // Persiste les modifications de la reservation en base de données
-            $entityManager->persist($booking);
-            $entityManager->flush();
+            if(!$booking->isBookabledays()){
+                $this->addFlash("warning","Dates indisponibles");
+            }else{
+                // Persiste les modifications de la reservation en base de données
+                $entityManager->persist($booking);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('app_booking_show',['id'=>$booking->getId()]); 
-
+                return $this->redirectToRoute('app_booking_show',['id'=>$booking->getId(),'alert'=>true]); 
+            }
 
         }
             // Ajoute un message flash de succès

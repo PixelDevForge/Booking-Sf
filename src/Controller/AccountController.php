@@ -160,4 +160,12 @@ class AccountController extends AbstractController
         // Rend la vue de la page d'accueil du compte utilisateur avec les informations de l'utilisateur actuel
         return $this->render('user/index.html.twig', ['user' => $this->getUser()]);
     }
+
+
+    #[Route('/account/booking',name :'app_account_bookings')]
+    public function bookings(): Response
+    {
+        return $this->render('account/bookings.html.twig');
+    }
+
 }

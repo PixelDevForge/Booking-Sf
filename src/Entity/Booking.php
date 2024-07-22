@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BookingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -25,9 +27,11 @@ class Booking
     private ?Ad $ad = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThan("today",message:"la date d'arrivée doit être ultérieure à la date d'aujourd'hui.")]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThan(propertyPath:"startDate",message:"la date de départ ne peut être antérieure à la date d'arrivée.")]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -48,6 +52,41 @@ class Booking
         if(empty($this->amount)){
             $this->amount = $this->ad->getPrice() * $this->getDuration();
         };
+    }
+
+    public function isBookabledays()
+    {
+        $notAvailableDays = $this->ad->getNotAvailableDays();
+        $bookignDays = $this->getDays();
+
+        $notAvailableDays = array_map(function($day){
+            return $day->format('Y-m-d');
+        },$notAvailableDays);
+
+        $days = array_map(function($day){
+            return $day->format('Y-m-d');
+        },$bookignDays);
+
+        foreach($days as $day){
+            if(array_search($day,$notAvailableDays) !== false) return false;
+        }
+        return true;
+
+    }
+
+    public function getDays()
+    {
+        $resultat = range(
+                $this->getStartDate()->getTimestamp(),
+                $this->getEndDate()->getTimestamp(),
+                24*60*60);
+        $days = array_map(function($dayTimestamp)
+        {
+                return new \DateTime(date('Y-m-d',$dayTimestamp));
+        },$resultat);
+
+        return $days;
+            
     }
 
     public function getDuration()

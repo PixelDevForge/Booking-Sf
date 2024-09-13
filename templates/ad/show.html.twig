@@ -49,6 +49,51 @@
                   <span class="visually-hidden">Next</span>
                 </button>
               </div>
+
+              <hr>
+
+              {% if ad.comments|length > 0 %}
+
+              <h3>Commentaires des voyageurs</h3>
+
+              <div class="alert alert-info">
+                <h4 class="alert-heading h5">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            Note Moyenne : {% include 'inc/rating.html.twig' with {'rating':ad.averageRatings} %}<br>
+                        </div>
+                        <div class="col-4">
+                            <small>{{ad.comments|length}} avis</small>
+                        </div>
+                    </div>
+                </h4>
+              </div>
+
+              <hr>
+                  {% for comment in ad.comments %}
+
+                  <div class="bg-light-rounded">
+                      <p><strong>{{comment.author.fullname}} :</strong></p>
+                      <blockquote>{{comment.content}}</blockquote>
+                      <p>Note : 
+                        {% include 'inc/rating.html.twig' with {'rating':comment.rating} %}
+                    </p>
+                  </div>
+
+                  <hr>
+
+                  {% endfor %}
+
+
+              {% else %}
+
+              <h3>Annonces non commentées</h3>
+
+              {% endif %}
+              
+
+
+
         </div>
 
         <div class="col ms-3">

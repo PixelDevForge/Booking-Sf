@@ -15,4 +15,6 @@ a:hover{color: indianred;}
 
 .flatpickr-disabled{color: red!important;}
 
+.rating i{color: goldenrod}
+
 footer{position: fixed;bottom: 0;width: 100%; color: #f3efef;}

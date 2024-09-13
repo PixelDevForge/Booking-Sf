@@ -16,7 +16,16 @@
             {% endif %}
         </div>
         <div class="card-footer text-muted">
-            Pas de notation
+            {% if ad.comments|length > 0 %}
+            
+            Note : <p>{% include 'inc/rating.html.twig' with {'rating':ad.averageRatings} %} <small>avec {{ ad.comments|length }} avis. </small></p>
+
+            {% else %}
+
+            Annonces non notées !
+  
+            {% endif %}
+            
         </div>
     </div>  
 </div>

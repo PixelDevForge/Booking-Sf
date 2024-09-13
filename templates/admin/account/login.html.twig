@@ -1,0 +1,34 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+            <div class="jumbotron py-3 px-3 bg-light border border-danger">
+                <h2 class="text-danger">Admin login</h2>
+
+                {% if hasError%}
+                <div class="alert alert-warning">Err de connexion</div>
+                {% endif %}
+               
+                <form action="{{path("app_admin_account_login")}}" method="post">
+                    <div class="form-group mt-3">
+                        <label class="text-danger" for="email">Email</label>
+                        <input class="form-control" type="email" name="_username" id="email" placeholder="Email" value="{{username}}" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="text-danger" for="password">password</label>
+                        <input class="form-control" type="password" name="_password" id="password" placeholder="Mot de passe" required>
+                    </div>
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-lock-open"></i> Connexion</button>
+                        <a href="{{ path('app_ads_list') }}" class="btn btn-link">Retour aux annonces</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
